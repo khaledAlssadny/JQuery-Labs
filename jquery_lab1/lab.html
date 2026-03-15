@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JQuery Lab 1</title>
+    <style>
+      div a {
+        color: green;
+      }
+
+      .btn-row {
+        display: flex;
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      .btn-row button {
+        background-color: #fff;
+        color: #111;
+        border: 1px solid #cfcfcf;
+        padding: 10px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      .menu-wrap {
+        position: relative;
+        display: inline-block;
+      }
+
+      #servicesMenu {
+        display: none;
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 0;
+        z-index: 10;
+        list-style: none;
+        margin: 0;
+        padding: 8px 0;
+        width: 100%;
+        min-width: 100%;
+        box-sizing: border-box;
+        border: 1px solid #cfcfcf;
+        border-radius: 8px;
+        background-color: #fff;
+      }
+
+      #servicesMenu li {
+        padding: 8px 12px;
+      }
+
+      #servicesMenu li:hover {
+        background-color: #f3f3f3;
+      }
+
+      #complainArea {
+        display: none;
+        margin-top: 16px;
+        max-width: 420px;
+        border: 1px solid #cfcfcf;
+        border-radius: 10px;
+        background-color: #fff;
+        padding: 14px;
+      }
+
+      #complainForm {
+        display: grid;
+        gap: 10px;
+      }
+
+      .form-fields {
+        display: grid;
+        gap: 10px;
+      }
+
+      #complainForm label {
+        font-weight: 600;
+      }
+
+      #complainForm input,
+      #complainForm textarea {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 8px 10px;
+        border: 1px solid #cfcfcf;
+        border-radius: 6px;
+      }
+
+      #complainForm button {
+        width: fit-content;
+        background-color: #fff;
+        color: #111;
+        border: 1px solid #cfcfcf;
+        padding: 10px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      #complainPreview {
+        display: none;
+        border: 1px dashed #cfcfcf;
+        border-radius: 6px;
+        background: #fff;
+        padding: 10px;
+      }
+
+      #complainPreview p {
+        margin: 6px 0;
+      }
+
+      #aboutArea {
+        display: none;
+        margin-top: 16px;
+        max-width: 420px;
+        border: 1px solid #cfcfcf;
+        border-radius: 10px;
+        background-color: #fff;
+        padding: 14px;
+      }
+
+      #galleryArea {
+        display: none;
+        margin-top: 16px;
+        max-width: 520px;
+        border: 1px solid #cfcfcf;
+        border-radius: 10px;
+        background-color: #fff;
+        padding: 14px;
+      }
+
+      .gallery-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+      }
+
+      #mainImage {
+        width: 260px;
+        max-width: 100%;
+        border-radius: 8px;
+      }
+
+      .arrow-btn {
+        width: 22px;
+        height: 22px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="jquery-4.0.0.js"></script>
+
+    <div class="btn-row">
+      <button id="aboutBtn" type="button">About</button>
+      <button id="galleryBtn" type="button">Gallary</button>
+      <div class="menu-wrap">
+        <button id="servicesBtn" type="button">Services</button>
+        <ul id="servicesMenu">
+          <li>Web Design</li>
+          <li>Marketing</li>
+          <li>Support</li>
+        </ul>
+      </div>
+      <button id="complainBtn" type="button">Complain</button>
+    </div>
+
+    <div id="aboutArea"></div>
+
+    <div id="galleryArea">
+      <div class="gallery-wrap">
+        <img src="left.png" id="prevBtn" class="arrow-btn" alt="Previous" />
+        <img src="1.jpg" id="mainImage" alt="Gallery image" />
+        <img src="right.png" id="nextBtn" class="arrow-btn" alt="Next" />
+      </div>
+    </div>
+
+    <div id="complainArea">
+      <form id="complainForm">
+        <div class="form-fields">
+          <label for="name">Name</label>
+          <input id="name" type="text" placeholder="Enter your name" />
+
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="Enter your email" />
+
+          <label for="phone">Phone</label>
+          <input id="phone" type="tel" placeholder="Enter your phone" />
+
+          <label for="complainText">Complain</label>
+          <textarea
+            id="complainText"
+            rows="4"
+            placeholder="Write your complain"
+          ></textarea>
+        </div>
+
+        <div id="complainPreview"></div>
+        <button id="sendBtn" type="submit">Send</button>
+      </form>
+    </div>
+
+    <script>
+      $(document).ready(function () {
+        const $about = $("#aboutArea");
+        const $gallery = $("#galleryArea");
+        const $complain = $("#complainArea");
+        const $servicesMenu = $("#servicesMenu");
+        const $formFields = $(".form-fields");
+        const $preview = $("#complainPreview");
+        const $sendBtn = $("#sendBtn");
+
+        let currentImage = 1;
+        const totalImages = 8;
+
+        function toggleSection($section) {
+          $([$about[0], $gallery[0], $complain[0]])
+            .not($section)
+            .stop(true, true)
+            .slideUp(200);
+
+          $section.stop(true, true).slideToggle(250);
+        }
+
+        function setImage(number) {
+          $("#mainImage").attr("src", number + ".jpg");
+        }
+
+        $("#aboutBtn").on("click", function () {
+          $about.html("Story About snow man");
+          toggleSection($about);
+        });
+
+        $("#galleryBtn").on("click", function () {
+          toggleSection($gallery);
+        });
+
+        $("#nextBtn").on("click", function () {
+          currentImage = (currentImage % totalImages) + 1;
+          setImage(currentImage);
+        });
+
+        $("#prevBtn").on("click", function () {
+          currentImage = currentImage === 1 ? totalImages : currentImage - 1;
+          setImage(currentImage);
+        });
+
+        $("#servicesBtn").on("click", function () {
+          $servicesMenu.stop(true, true).slideToggle(250);
+        });
+
+        $("#complainBtn").on("click", function () {
+          toggleSection($complain);
+        });
+
+        $("#complainForm").on("submit", function (e) {
+          e.preventDefault();
+
+          if ($sendBtn.text() === "Send") {
+            const name = $("#name").val().trim();
+            const email = $("#email").val().trim();
+            const phone = $("#phone").val().trim();
+            const complainText = $("#complainText").val().trim();
+
+            $preview.html(`
+              <p><strong>Name:</strong> ${name}</p>
+              <p><strong>Email:</strong> ${email}</p>
+              <p><strong>Phone:</strong> ${phone}</p>
+              <p><strong>Complain:</strong> ${complainText}</p>
+            `);
+
+            $formFields.slideUp(200);
+            $preview.slideDown(200);
+            $sendBtn.text("Edit Data");
+          } else {
+            $preview.slideUp(200);
+            $formFields.slideDown(200);
+            $sendBtn.text("Send");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
