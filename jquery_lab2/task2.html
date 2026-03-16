@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Image Slideshow</title>
+    <script src="jquery-3.7.1.js"></script>
+
+    <!-- Slick Slider Plugin -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
+    <style>
+      .slideshow {
+        width: 400px;
+        margin: 30px auto;
+      }
+      .slideshow img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+      }
+      h2 {
+        text-align: center;
+        font-family: Arial;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Image Slideshow</h2>
+
+    <div class="slideshow">
+      <div><img src="1.jpg" /></div>
+      <div><img src="2.jpg" /></div>
+      <div><img src="3.jpg" /></div>
+    </div>
+
+    <script>
+      $(document).ready(function () {
+        $(".slideshow").slick({
+          autoplay: true, // slides automatically
+          autoplaySpeed: 2000, // every 2 seconds
+          dots: true, // show dots at bottom
+          arrows: true, // show prev/next arrows
+          infinite: true, // loop forever
+        });
+      });
+    </script>
+  </body>
+</html>

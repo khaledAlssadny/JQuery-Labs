@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Image Zoom</title>
+    <script src="jquery-4.0.0.js"></script>
+    <!-- jQuery Zoom Plugin CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-zoom/1.7.21/jquery.zoom.min.js"></script>
+    <style>
+      span {
+        display: inline-block;
+        width: 300px;
+        height: 200px;
+      }
+      h2 {
+        font-family: Arial;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Hover over image to Zoom</h2>
+
+    <!-- wrapper span is required by the plugin -->
+    <span id="zoom-wrapper">
+      <img src="12.gif" width="300" height="200" />
+    </span>
+
+    <script>
+      $(document).ready(function () {
+        $("#zoom-wrapper").zoom();
+      });
+    </script>
+  </body>
+</html>

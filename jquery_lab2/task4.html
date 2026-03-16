@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Draggable & Droppable</title>
+    <script src="jquery-4.0.0.js"></script>
+    <script src="scripts/jquery-ui.js"></script>
+    <style>
+      body {
+        font-family: Arial;
+      }
+
+      #drag-img {
+        width: 150px;
+        cursor: grab;
+      }
+
+      #drop-zone {
+        width: 180px;
+        height: 180px;
+        border: 3px dashed #999;
+        display: inline-block;
+        text-align: center;
+        line-height: 180px;
+        color: #999;
+        font-size: 14px;
+        vertical-align: top;
+        margin-left: 80px;
+      }
+
+      /* highlight drop zone when dragging over it */
+      #drop-zone.hover {
+        border-color: #4caf50;
+        background-color: #f0fff0;
+        color: #4caf50;
+      }
+
+      .container {
+        display: flex;
+        align-items: center;
+        gap: 80px;
+        margin-top: 40px;
+        margin-left: 40px;
+      }
+
+      h2 {
+        margin-left: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Drag the car into the drop zone</h2>
+
+    <div class="container">
+      <!-- Draggable image -->
+      <img src="2.jpg" id="drag-img" />
+
+      <!-- Drop zone with second image as background -->
+      <div id="drop-zone">
+        <img
+          src="3.jpg"
+          2
+          id="drop-img"
+          style="width: 150px; height: 150px; object-fit: cover"
+        />
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function () {
+        // Make the first image draggable
+        $("#drag-img").draggable({
+          revert: "invalid", // go back if NOT dropped on target
+          opacity: 0.7, // semi-transparent while dragging
+          cursor: "grabbing",
+        });
+
+        // Make the drop zone droppable
+        $("#drop-zone").droppable({
+          // highlight when dragging over
+          over: function () {
+            $(this).addClass("hover");
+          },
+
+          // remove highlight when leaving
+          out: function () {
+            $(this).removeClass("hover");
+          },
+
+          drop: function (event, ui) {
+            $(this).removeClass("hover");
+
+            // hide the dragged image
+            ui.draggable.fadeOut(1000);
+
+            // hide the drop zone image
+            $("#drop-img").fadeOut(1000);
+
+            // change border to green
+            $(this).css("border", "3px solid #4CAF50");
+          },
+        });
+      });
+    </script>
+  </body>
+</html>

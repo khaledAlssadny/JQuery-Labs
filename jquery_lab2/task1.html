@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>--- Moving Car ---</title>
+    <script src="jquery-4.0.0.js"></script>
+    <style>
+      #car {
+        position: absolute; /* REQUIRED for left to work */
+        left: 0px;
+        top: 50px;
+        width: 150px;
+      }
+    </style>
+  </head>
+  <body>
+    <img src="12.gif" id="car" />
+    <p
+      id="info"
+      style="
+        position: absolute;
+        top: 160px;
+        left: 10px;
+        color: blue;
+        font-family: monospace;
+      "
+    >
+      &lt;img src="12.gif" style="left: 0px"/&gt;
+    </p>
+
+    <script>
+      $(document).ready(function () {
+        // Starts immediately when page loads
+        $("#car").animate(
+          { left: "1500px" },
+          {
+            duration: 3000,
+            step: function (now) {
+              $("#info").html(
+                '&lt;img src="12.gif" style="left: ' +
+                  Math.round(now) +
+                  'px"/&gt;',
+              );
+            },
+          },
+        );
+      });
+    </script>
+  </body>
+</html>
